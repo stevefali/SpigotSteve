@@ -1,0 +1,4 @@
+name: SpigotSteve
+version: '${version}'
+main: org.steve.spigotsteve.SpigotSteve
+api-version: '1.20'
