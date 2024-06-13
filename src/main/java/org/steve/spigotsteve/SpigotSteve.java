@@ -1,7 +1,9 @@
 package org.steve.spigotsteve;
 
+import org.bukkit.Material;
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.steve.spigotsteve.drops.RandomDrops;
 import org.steve.spigotsteve.events.DropEvent;
 
 import java.util.logging.Handler;
@@ -12,6 +14,16 @@ public final class SpigotSteve extends JavaPlugin {
     @Override
     public void onEnable() {
         // Plugin startup logic
+
+        getLogger().info("Number of Items: " + Material.values().length);
+        getLogger().info("First item in list: " + Material.values()[0].name());
+        getLogger().info("Last item in list: " + Material.values()[Material.values().length - 1].name());
+
+        // TODO: Check Material names vs Item names - ID's or other way of getting Material from Item or ItemStack?
+        // TODO: Possibly print out all Material items
+        // TODO: Possibly make new exclusion list
+        // TODO:
+
 
         dropEvent = new DropEvent();
         getServer().getPluginManager().registerEvents(dropEvent, this);
