@@ -1,18 +1,11 @@
 package org.steve.spigotsteve.drops;
 
 import org.bukkit.Material;
-import org.bukkit.inventory.ItemStack;
-
 import java.util.*;
 
-import static org.bukkit.Bukkit.getLogger;
-
 public class RandomDrops {
-
     private static ArrayList<Material> masterList;
     private static ArrayList<Material> shuffledList;
-
-
 
     public static void shuffleItems(long gameSeed) {
         masterList = new ArrayList<>();
@@ -23,7 +16,6 @@ public class RandomDrops {
         shuffledList = new ArrayList<>(masterList);
         Collections.shuffle(shuffledList, new Random(gameSeed));
     }
-
 
     public static Material getRandomizedItem(Material vanillaItem) {
 
@@ -40,7 +32,6 @@ public class RandomDrops {
             return vanillaItem;
         }
     }
-
 
     public static ArrayList<Material> getShuffledList() {
         return shuffledList;
