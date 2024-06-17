@@ -19,10 +19,6 @@ public final class SpigotSteve extends JavaPlugin {
         getLogger().info("First item in list: " + Material.values()[0].name());
         getLogger().info("Last item in list: " + Material.values()[Material.values().length - 1].name());
 
-        // TODO: Check Material names vs Item names - ID's or other way of getting Material from Item or ItemStack?
-        // TODO: Possibly print out all Material items
-        // TODO: Possibly make new exclusion list
-        // TODO:
 
         ArrayList<Material> materials = new ArrayList<>();
         materials.addAll(List.of(Material.values()));

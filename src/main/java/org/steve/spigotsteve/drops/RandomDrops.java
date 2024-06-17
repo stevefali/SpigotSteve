@@ -3,10 +3,7 @@ package org.steve.spigotsteve.drops;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 import static org.bukkit.Bukkit.getLogger;
 
@@ -24,11 +21,11 @@ public class RandomDrops {
         masterList.sort(Comparator.comparing(Material::toString));
 
         shuffledList = new ArrayList<>(masterList);
-        Collections.shuffle(shuffledList);
+        Collections.shuffle(shuffledList, new Random(gameSeed));
     }
 
 
-    public static Material getRandomizedItem(Material vanillaItem, Long seed) {
+    public static Material getRandomizedItem(Material vanillaItem) {
 
         if (masterList != null) {
             int index = masterList.indexOf(vanillaItem);

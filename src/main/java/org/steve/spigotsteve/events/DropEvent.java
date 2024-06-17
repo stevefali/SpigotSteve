@@ -29,24 +29,33 @@ public class DropEvent implements Listener {
             RandomDrops.shuffleItems(event.getBlock().getWorld().getSeed());
         }
 
-        ArrayList<ItemStack> moddedLoot = new ArrayList<>();
+        ArrayList<Material> moddedLoot = new ArrayList<>();
 
         World world = event.getBlock().getWorld();
         Location location = event.getBlock().getLocation();
 
 
         event.getItems().forEach(item -> {
-            getLogger().info(item.getName() + " was dropped! " + item.getItemStack().getType().name());
-            moddedLoot.add(new ItemStack(Material.GOLD_BLOCK));
-//            event.getItems().remove(item);
+//            getLogger().info(item.getName() + " was dropped! " + item.getItemStack().getType().name());
+            moddedLoot.add(item.getItemStack().getType());
+//
         });
 
         event.setCancelled(true);
 
         getLogger().info("# of vanilla drops: " + moddedLoot.size());
-        world.dropItemNaturally(location, new ItemStack(Material.DIAMOND_BLOCK));
-
-        dropSomething(location, world, Material.CARROT);
+//        world.dropItemNaturally(location, new ItemStack(Material.DIAMOND_BLOCK));
+//
+//        dropSomething(location, world, Material.CARROT);
+//
+        moddedLoot.forEach(vanillaDrop -> {
+            Material randomizedDrop = RandomDrops.getRandomizedItem(vanillaDrop);
+            try {
+                world.dropItemNaturally(location, new ItemStack(randomizedDrop));
+            } catch (Exception e) {
+                getLogger().info("** Error dropping " + randomizedDrop.name());
+            }
+        });
 
 
     }
@@ -55,19 +64,23 @@ public class DropEvent implements Listener {
     public void entityDrop(EntityDropItemEvent event) {
 
 
+        if (RandomDrops.getShuffledList() == null) {
+            RandomDrops.shuffleItems(event.getEntity().getWorld().getSeed());
+        }
+
 
         getLogger().info(event.getItemDrop().getName() + " was dropped by " + event.getEntity().getName());
     }
 
 
-    private void dropSomething(Location location, World world, Material material) {
-        try {
-            world.dropItemNaturally(location, new ItemStack(material));
-        } catch (Exception e) {
-            getLogger().info("******* Error material: " + material.name() + " ******");
-        }
-
-    }
+//    private void dropSomething(Location location, World world, Material material) {
+//        try {
+//            world.dropItemNaturally(location, new ItemStack(material));
+//        } catch (Exception e) {
+//            getLogger().info("******* Error material: " + material.name() + " ******");
+//        }
+//
+//    }
 
 
 
