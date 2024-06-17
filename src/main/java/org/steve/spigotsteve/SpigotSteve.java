@@ -1,10 +1,10 @@
 package org.steve.spigotsteve;
 
+
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.steve.spigotsteve.events.DropEvent;
 
-import java.util.logging.Handler;
 
 public final class SpigotSteve extends JavaPlugin {
 
@@ -12,7 +12,6 @@ public final class SpigotSteve extends JavaPlugin {
     @Override
     public void onEnable() {
         // Plugin startup logic
-
         dropEvent = new DropEvent();
         getServer().getPluginManager().registerEvents(dropEvent, this);
     }
