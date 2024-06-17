@@ -11,6 +11,7 @@ import org.bukkit.event.entity.EntityDropItemEvent;
 import org.bukkit.event.server.ServerEvent;
 import org.bukkit.event.server.ServerLoadEvent;
 import org.bukkit.inventory.ItemStack;
+import org.steve.spigotsteve.drops.RandomDrops;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -23,6 +24,10 @@ public class DropEvent implements Listener {
 
     @EventHandler
     public void blockDrop(BlockDropItemEvent event) {
+
+        if (RandomDrops.getShuffledList() == null) {
+            RandomDrops.shuffleItems(event.getBlock().getWorld().getSeed());
+        }
 
         ArrayList<ItemStack> moddedLoot = new ArrayList<>();
 

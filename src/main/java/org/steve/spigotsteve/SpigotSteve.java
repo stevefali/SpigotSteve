@@ -1,22 +1,16 @@
 package org.steve.spigotsteve;
 
 import org.bukkit.Material;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.Item;
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.steve.spigotsteve.drops.RandomDrops;
 import org.steve.spigotsteve.events.DropEvent;
-import org.steve.spigotsteve.events.SpigotSteveServerEvent;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Handler;
 
 public final class SpigotSteve extends JavaPlugin {
 
     public DropEvent dropEvent;
-    SpigotSteveServerEvent serverEvent;
     @Override
     public void onEnable() {
         // Plugin startup logic
@@ -50,19 +44,14 @@ public final class SpigotSteve extends JavaPlugin {
 
 
         dropEvent = new DropEvent();
-        serverEvent = new SpigotSteveServerEvent();
         getServer().getPluginManager().registerEvents(dropEvent, this);
-        getServer().getPluginManager().registerEvents(serverEvent, this);
 
-
-//        RandomDrops.shuffleItems();
     }
 
     @Override
     public void onDisable() {
         // Plugin shutdown logic
         HandlerList.unregisterAll(dropEvent);
-        HandlerList.unregisterAll(serverEvent);
     }
 
 

@@ -28,7 +28,8 @@ public class RandomDrops {
     }
 
 
-    public static Material getRandomizedItem(Material vanillaItem) {
+    public static Material getRandomizedItem(Material vanillaItem, Long seed) {
+
         if (masterList != null) {
             int index = masterList.indexOf(vanillaItem);
 
@@ -41,6 +42,11 @@ public class RandomDrops {
         else {
             return vanillaItem;
         }
+    }
+
+
+    public static ArrayList<Material> getShuffledList() {
+        return shuffledList;
     }
 
 
