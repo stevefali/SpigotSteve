@@ -7,6 +7,7 @@ import org.bukkit.entity.Item;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockDropItemEvent;
+import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.EntityDropItemEvent;
 import org.bukkit.event.server.ServerEvent;
 import org.bukkit.event.server.ServerLoadEvent;
@@ -34,53 +35,55 @@ public class DropEvent implements Listener {
         World world = event.getBlock().getWorld();
         Location location = event.getBlock().getLocation();
 
-
         event.getItems().forEach(item -> {
-//            getLogger().info(item.getName() + " was dropped! " + item.getItemStack().getType().name());
             moddedLoot.add(item.getItemStack().getType());
 //
         });
 
         event.setCancelled(true);
 
-        getLogger().info("# of vanilla drops: " + moddedLoot.size());
-//        world.dropItemNaturally(location, new ItemStack(Material.DIAMOND_BLOCK));
-//
-//        dropSomething(location, world, Material.CARROT);
-//
         moddedLoot.forEach(vanillaDrop -> {
-            Material randomizedDrop = RandomDrops.getRandomizedItem(vanillaDrop);
-            try {
-                world.dropItemNaturally(location, new ItemStack(randomizedDrop));
-            } catch (Exception e) {
-                getLogger().info("** Error dropping " + randomizedDrop.name());
-            }
+//            Material randomizedDrop = RandomDrops.getRandomizedItem(vanillaDrop);
+//            try {
+//                world.dropItemNaturally(location, new ItemStack(randomizedDrop));
+//            } catch (Exception e) {
+//                getLogger().info("** Error dropping " + randomizedDrop.name());
+//            }
+            dropSomething(location, world, vanillaDrop);
         });
-
-
     }
 
     @EventHandler
-    public void entityDrop(EntityDropItemEvent event) {
-
-
+    public void entityDrop(EntityDeathEvent event) {
         if (RandomDrops.getShuffledList() == null) {
             RandomDrops.shuffleItems(event.getEntity().getWorld().getSeed());
         }
 
+        World world = event.getEntity().getWorld();
+        Location location = event.getEntity().getLocation();
 
-        getLogger().info(event.getItemDrop().getName() + " was dropped by " + event.getEntity().getName());
+        ArrayList<Material> moddedLoot = new ArrayList<>();
+
+        event.getDrops().forEach(item -> {
+            moddedLoot.add(item.getType());
+        });
+
+        event.getDrops().clear();
+
+        moddedLoot.forEach(vanillaDrop -> {
+            dropSomething(location, world, vanillaDrop);
+        });
     }
 
 
-//    private void dropSomething(Location location, World world, Material material) {
-//        try {
-//            world.dropItemNaturally(location, new ItemStack(material));
-//        } catch (Exception e) {
-//            getLogger().info("******* Error material: " + material.name() + " ******");
-//        }
-//
-//    }
+    private void dropSomething(Location location, World world, Material vanillaLoot) {
+        Material randomizedLoot = RandomDrops.getRandomizedItem(vanillaLoot);
+        try {
+            world.dropItemNaturally(location, new ItemStack(randomizedLoot));
+        } catch (Exception e) {
+            getLogger().info("*** Error dropping " + randomizedLoot.name());
+        }
+    }
 
 
 
