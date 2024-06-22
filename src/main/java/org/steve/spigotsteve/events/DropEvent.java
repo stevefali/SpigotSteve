@@ -1,16 +1,22 @@
 package org.steve.spigotsteve.events;
 
+import org.bukkit.GameRule;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockDropItemEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.inventory.ItemStack;
+import org.steve.spigotsteve.SpigotSteve;
 import org.steve.spigotsteve.drops.RandomDrops;
 import java.util.ArrayList;
+import java.util.Arrays;
+
 import static org.bukkit.Bukkit.getLogger;
+import static org.bukkit.Bukkit.getRegistry;
 
 public class DropEvent implements Listener {
 
@@ -22,6 +28,7 @@ public class DropEvent implements Listener {
             RandomDrops.shuffleItems(event.getBlock().getWorld().getSeed());
         }
 
+
         ArrayList<Material> moddedLoot = new ArrayList<>();
 
         World world = event.getBlock().getWorld();
@@ -31,6 +38,9 @@ public class DropEvent implements Listener {
             moddedLoot.add(item.getItemStack().getType());
         });
 
+
+//        if (event.getBlock().getBlockData().getAsString())
+//        getLogger().info(event.getBlock().getType().name());
 
 
         event.setCancelled(true);
@@ -75,6 +85,22 @@ public class DropEvent implements Listener {
     }
 
 
+    @EventHandler
+    private void blockBreak(BlockBreakEvent event) {
+        getLogger().info(event.getBlock().getType().name());
+
+        if (event.getBlock().getType().name().equals("GRASS_BLOCK")) {
+            event.getBlock().getWorld().setGameRule(SpigotSteve.DO_PLAYER_RANDOM_DROPS, false);
+            getLogger().info("Grass block matched!!");
+        }
+
+        getLogger().info("Player random drops: " + event.getBlock().getWorld().getGameRuleValue(SpigotSteve.DO_PLAYER_RANDOM_DROPS));
+
+
+
+
+
+    }
 
 
 }
