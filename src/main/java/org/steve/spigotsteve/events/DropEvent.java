@@ -4,6 +4,7 @@ import org.bukkit.GameRule;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
@@ -15,11 +16,14 @@ import org.steve.spigotsteve.drops.RandomDrops;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import static org.bukkit.Bukkit.getLogger;
-import static org.bukkit.Bukkit.getRegistry;
+import static org.bukkit.Bukkit.*;
 
 public class DropEvent implements Listener {
 
+    FileConfiguration config;
+    public DropEvent(FileConfiguration config) {
+        this.config = config;
+    }
 
     @EventHandler
     public void blockDrop(BlockDropItemEvent event) {
@@ -37,10 +41,6 @@ public class DropEvent implements Listener {
         event.getItems().forEach(item -> {
             moddedLoot.add(item.getItemStack().getType());
         });
-
-
-//        if (event.getBlock().getBlockData().getAsString())
-//        getLogger().info(event.getBlock().getType().name());
 
 
         event.setCancelled(true);
@@ -90,11 +90,13 @@ public class DropEvent implements Listener {
         getLogger().info(event.getBlock().getType().name());
 
         if (event.getBlock().getType().name().equals("GRASS_BLOCK")) {
-            event.getBlock().getWorld().setGameRule(SpigotSteve.DO_PLAYER_RANDOM_DROPS, false);
+//            event.getBlock().getWorld().setGameRule(SpigotSteve.DO_PLAYER_RANDOM_DROPS, false);
             getLogger().info("Grass block matched!!");
+
         }
 
-        getLogger().info("Player random drops: " + event.getBlock().getWorld().getGameRuleValue(SpigotSteve.DO_PLAYER_RANDOM_DROPS));
+        getLogger().info("Block Random Drops: " + config.getBoolean("doBlockRandomDrops"));
+//        getLogger().info("Player random drops: " + event.getBlock().getWorld().getGameRuleValue(SpigotSteve.DO_PLAYER_RANDOM_DROPS));
 
 
 
