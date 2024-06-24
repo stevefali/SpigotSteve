@@ -5,13 +5,22 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 
+import java.util.Objects;
+import java.util.function.Function;
+
 import static org.bukkit.Bukkit.getLogger;
 
-public class RandomizationCommands  implements CommandExecutor {
+public class RandomizationCommands implements CommandExecutor {
 
     private final FileConfiguration fileConfig;
-    public RandomizationCommands(FileConfiguration config) {
+
+    private final String[] spigotSteveRules;
+
+
+
+    public RandomizationCommands(FileConfiguration config, String[] spigotSteveRules) {
         this.fileConfig = config;
+        this.spigotSteveRules = spigotSteveRules;
     }
 
     @Override
@@ -21,7 +30,17 @@ public class RandomizationCommands  implements CommandExecutor {
             if (args.length != 2) {
                 sendInputIncorrectMessage(sender);
             } else {
-                getLogger().info("SpigotSteve command executed. Rule is: " + args[0] + ", value entered is: " + args[1]);
+                if (args[1].equalsIgnoreCase("true") || args[1].equalsIgnoreCase("false")) {
+                    for (String rule : spigotSteveRules) {
+                        if (Objects.equals(args[0], rule)) {
+                            fileConfig.set(rule, Boolean.valueOf(args[1]));
+
+                        }
+                    }
+                }
+                else  {
+                    sendInputIncorrectMessage(sender);
+                }
             }
 
         }

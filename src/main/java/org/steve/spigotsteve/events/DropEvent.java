@@ -25,6 +25,8 @@ public class DropEvent implements Listener {
         this.config = config;
     }
 
+    //TODO: Make drop randomization conditional based on spigotSteve gameRules
+
     @EventHandler
     public void blockDrop(BlockDropItemEvent event) {
 

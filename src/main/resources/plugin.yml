@@ -5,5 +5,6 @@ api-version: '1.20'
 commands:
   spigotSteve:
     description: GameRules to customize drop randomization.
-    usage: /<spigotSteve> <rule> <true/false>
+    usage: "Usage: /<spigotSteve> [rule] [true|false]"
+
 
