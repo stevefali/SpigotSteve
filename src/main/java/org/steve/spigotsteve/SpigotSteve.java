@@ -2,9 +2,12 @@ package org.steve.spigotsteve;
 
 
 import org.bukkit.GameRule;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.steve.spigotsteve.commands.RandomizationCommands;
 import org.steve.spigotsteve.events.DropEvent;
 
 
@@ -23,6 +26,8 @@ public final class SpigotSteve extends JavaPlugin {
         config.options().copyDefaults(true);
         saveConfig();
 
+        this.getCommand("spigotSteve").setExecutor(new RandomizationCommands(config));
+
         dropEvent = new DropEvent(config);
         getServer().getPluginManager().registerEvents(dropEvent, this);
 
@@ -34,4 +39,16 @@ public final class SpigotSteve extends JavaPlugin {
         HandlerList.unregisterAll(dropEvent);
     }
 
+
+
+//    @Override
+//    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+//
+//        if (command.getName().equalsIgnoreCase("spigotsteve")) {
+//            getLogger().info("SpigotSteve command executed. Rule is: " + args[0] + ", value entered is: " + args[1]);
+//        }
+//
+//        return false;
+//    }
+//
 }
