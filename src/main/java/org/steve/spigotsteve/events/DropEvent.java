@@ -1,19 +1,33 @@
 package org.steve.spigotsteve.events;
 
+import org.bukkit.GameRule;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockDropItemEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.inventory.ItemStack;
+import org.steve.spigotsteve.SpigotSteve;
 import org.steve.spigotsteve.drops.RandomDrops;
+
 import java.util.ArrayList;
-import static org.bukkit.Bukkit.getLogger;
+import java.util.Arrays;
+
+import static org.bukkit.Bukkit.*;
 
 public class DropEvent implements Listener {
 
+    FileConfiguration config;
+
+    public DropEvent(FileConfiguration config) {
+        this.config = config;
+    }
+
+    //TODO: Make drop randomization for Players conditional on spigotSteve gameRule.
 
     @EventHandler
     public void blockDrop(BlockDropItemEvent event) {
@@ -22,22 +36,23 @@ public class DropEvent implements Listener {
             RandomDrops.shuffleItems(event.getBlock().getWorld().getSeed());
         }
 
-        ArrayList<Material> moddedLoot = new ArrayList<>();
+        if (config.getBoolean("doBlockRandomDrops")) {
 
-        World world = event.getBlock().getWorld();
-        Location location = event.getBlock().getLocation();
+            ArrayList<Material> moddedLoot = new ArrayList<>();
 
-        event.getItems().forEach(item -> {
-            moddedLoot.add(item.getItemStack().getType());
-        });
+            World world = event.getBlock().getWorld();
+            Location location = event.getBlock().getLocation();
 
+            event.getItems().forEach(item -> {
+                moddedLoot.add(item.getItemStack().getType());
+            });
 
+            event.setCancelled(true);
 
-        event.setCancelled(true);
-
-        moddedLoot.forEach(vanillaDrop -> {
-            dropSomething(location, world, vanillaDrop);
-        });
+            moddedLoot.forEach(vanillaDrop -> {
+                dropSomething(location, world, vanillaDrop);
+            });
+        }
     }
 
     @EventHandler
@@ -46,22 +61,27 @@ public class DropEvent implements Listener {
             RandomDrops.shuffleItems(event.getEntity().getWorld().getSeed());
         }
 
-        World world = event.getEntity().getWorld();
-        Location location = event.getEntity().getLocation();
+        if (config.getBoolean("doEntityRandomDrops")) {
 
-        ArrayList<Material> moddedLoot = new ArrayList<>();
+            World world = event.getEntity().getWorld();
+            Location location = event.getEntity().getLocation();
 
-        event.getDrops().forEach(item -> {
-            for (int i = 0; i < item.getAmount(); i++) {
-                moddedLoot.add(item.getType());
-            }
-        });
+            ArrayList<Material> moddedLoot = new ArrayList<>();
 
-        event.getDrops().clear();
+            event.getDrops().forEach(item -> {
+                for (int i = 0; i < item.getAmount(); i++) {
+                    moddedLoot.add(item.getType());
+                }
+            });
 
-        moddedLoot.forEach(vanillaDrop -> {
-            dropSomething(location, world, vanillaDrop);
-        });
+            event.getDrops().clear();
+
+            moddedLoot.forEach(vanillaDrop -> {
+                dropSomething(location, world, vanillaDrop);
+            });
+        }
+
+
     }
 
 
@@ -75,6 +95,21 @@ public class DropEvent implements Listener {
     }
 
 
+    @EventHandler
+    private void blockBreak(BlockBreakEvent event) {
+        getLogger().info(event.getBlock().getType().name());
+
+        if (event.getBlock().getType().name().equals("GRASS_BLOCK")) {
+//            event.getBlock().getWorld().setGameRule(SpigotSteve.DO_PLAYER_RANDOM_DROPS, false);
+            getLogger().info("Grass block matched!!");
+
+        }
+
+        getLogger().info("Block Random Drops: " + config.getBoolean("doBlockRandomDrops"));
+//        getLogger().info("Player random drops: " + event.getBlock().getWorld().getGameRuleValue(SpigotSteve.DO_PLAYER_RANDOM_DROPS));
+
+
+    }
 
 
 }

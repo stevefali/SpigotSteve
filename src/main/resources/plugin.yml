@@ -2,3 +2,9 @@ name: SpigotSteve
 version: '${version}'
 main: org.steve.spigotsteve.SpigotSteve
 api-version: '1.20'
+commands:
+  spigotSteve:
+    description: GameRules to customize drop randomization.
+    usage: "Usage: /<spigotSteve> <rule> <true|false>"
+
+
