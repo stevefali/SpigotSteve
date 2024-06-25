@@ -1,19 +1,11 @@
 package org.steve.spigotsteve;
 
-
-import org.bukkit.GameRule;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.steve.spigotsteve.commands.CommandTabCompletion;
 import org.steve.spigotsteve.commands.RandomizationCommands;
 import org.steve.spigotsteve.events.DropEvent;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-
 
 public final class SpigotSteve extends JavaPlugin {
 
@@ -34,10 +26,10 @@ public final class SpigotSteve extends JavaPlugin {
         saveConfig();
 
         this.getCommand("spigotSteve").setExecutor(new RandomizationCommands(config, spigotSteveRules));
+        this.getCommand("spigotSteve").setTabCompleter(new CommandTabCompletion(spigotSteveRules));
 
         dropEvent = new DropEvent(config);
         getServer().getPluginManager().registerEvents(dropEvent, this);
-
     }
 
     @Override
