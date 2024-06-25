@@ -3,20 +3,14 @@ package org.steve.spigotsteve.commands;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.command.TabCompleter;
 import org.bukkit.configuration.file.FileConfiguration;
 
-import java.util.Arrays;
-import java.util.List;
 import java.util.Objects;
 
 public class RandomizationCommands implements CommandExecutor {
 
     private final FileConfiguration fileConfig;
-
     private final String[] spigotSteveRules;
-
-
 
     public RandomizationCommands(FileConfiguration config, String[] spigotSteveRules) {
         this.fileConfig = config;
@@ -25,7 +19,6 @@ public class RandomizationCommands implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-
         if (command.getName().equalsIgnoreCase("spigotsteve")) {
             if (args.length != 2) {
                 sendInputIncorrectMessage(sender);
@@ -37,14 +30,11 @@ public class RandomizationCommands implements CommandExecutor {
                             return true;
                         }
                     }
-                }
-                else  {
+                } else {
                     sendInputIncorrectMessage(sender);
                 }
             }
         }
-
-
         return false;
     }
 

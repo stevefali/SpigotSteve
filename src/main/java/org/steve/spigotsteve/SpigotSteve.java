@@ -30,7 +30,6 @@ public final class SpigotSteve extends JavaPlugin {
 
         dropEvent = new DropEvent(config);
         getServer().getPluginManager().registerEvents(dropEvent, this);
-
     }
 
     @Override
