@@ -3,12 +3,12 @@ package org.steve.spigotsteve.commands;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabCompleter;
 import org.bukkit.configuration.file.FileConfiguration;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
-import java.util.function.Function;
-
-import static org.bukkit.Bukkit.getLogger;
 
 public class RandomizationCommands implements CommandExecutor {
 
@@ -34,7 +34,7 @@ public class RandomizationCommands implements CommandExecutor {
                     for (String rule : spigotSteveRules) {
                         if (Objects.equals(args[0], rule)) {
                             fileConfig.set(rule, Boolean.valueOf(args[1]));
-
+                            return true;
                         }
                     }
                 }
@@ -42,7 +42,6 @@ public class RandomizationCommands implements CommandExecutor {
                     sendInputIncorrectMessage(sender);
                 }
             }
-
         }
 
 
@@ -52,4 +51,5 @@ public class RandomizationCommands implements CommandExecutor {
     private void sendInputIncorrectMessage(CommandSender sender) {
         sender.sendMessage("Error! Correct format for SpigotSteve GameRule commands is '/spigotSteve <rule> <true/false>'");
     }
+
 }
