@@ -9,6 +9,7 @@ The basic way this works in code is:
 - Storing a master list of all the game's available drop items.
 - Making another list of the same items, but shuffling them into a random order based on the world seed.
 - Listening for the drop event when a block is broken or a mob or player dies.
+- Checking if that feature's game rule is turned on or off.
 - Finding the index of each vanilla drop item in the master list.
 - Replacing each vanilla drop item with the item at the same index in the shuffled list.
 
