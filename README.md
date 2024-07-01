@@ -3,7 +3,7 @@
 ### This is a Spigot Minecraft server plugin with a similar basic functionality to [Mega Randomizer](https://www.curseforge.com/minecraft/mc-mods/mega-randomizer), a Minecraft mod I made for Forge.
 
 ## Main functionality
-SpigotSteve randomizes drops from blocks, mobs, and even players.
+SpigotSteve randomizes drops from blocks, mobs, and even players. Each drop randomization type can be turned off or on using commands.
 The basic way this works in code is:
 
 - Storing a master list of all the game's available drop items.
